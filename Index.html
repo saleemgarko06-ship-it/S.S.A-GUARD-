@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraGuard Stealth Security</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex items-center justify-center p-4 font-sans">
+
+    <!-- Container -->
+    <div class="w-full max-w-sm bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-6 relative overflow-hidden">
+        
+        <!-- App Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-lg font-bold tracking-wider text-emerald-400">AURA<span class="text-white">GUARD</span></h1>
+            <span id="mesh-status" class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full border border-slate-700">📶 Mesh: Active</span>
+        </div>
+
+        <!-- Normal / Safe Screen State -->
+        <div id="main-interface">
+            <div class="bg-slate-800/60 p-4 rounded-2xl mb-6 border border-slate-700/50">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Status na Tsaro</p>
+                <p class="text-xl font-semibold text-emerald-400">Lafiya lau (Normal)</p>
+                <p class="text-xs text-slate-400 mt-2">Dukkan na'urorin biyayya suna aiki tare.</p>
+            </div>
+
+            <!-- PIN Entry Form -->
+            <div class="space-y-4">
+                <label class="block text-sm text-slate-300 font-medium">Shigar da PIN din Bude Wayar:</label>
+                <input type="password" id="user-pin" placeholder="****" maxlength="4" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-xl tracking-widest text-white focus:outline-none focus:border-emerald-500">
+                
+                <button onclick="verifyPin()" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-3 rounded-xl transition shadow-lg text-slate-950">
+                    Shiga App Din
+                </button>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-xs text-slate-500">Kuri'ar Tsaro: Idan aka matsa maka, saka <strong>9999</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Decoy / Silent Alarm Triggered State -->
+        <div id="decoy-interface" class="hidden text-center py-6">
+            <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                📝
+            </div>
+            <h2 class="text-lg font-bold text-white mb-2">Notes & Reminders</h2>
+            <p class="text-sm text-slate-400 mb-6">Babu wani bayani a adana a yanzu.</p>
+            
+            <div class="bg-red-500/10 border border-red-500/30 p-3 rounded-xl text-xs text-red-400">
+                ⚠️ <strong>Silent Mode Active:</strong> Ana tura GPS da Hoton Mahara ta karkashin kasa zuwa Cibiyar Tsaro ta Offline Mesh.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function verifyPin() {
+            const pin = document.getElementById('user-pin').value;
+            const mainDiv = document.getElementById('main-interface');
+            const decoyDiv = document.getElementById('decoy-interface');
+            const meshStatus = document.getElementById('mesh-status');
+
+            if (pin === "9999") {
+                mainDiv.classList.add('hidden');
+                decoyDiv.classList.remove('hidden');
+                meshStatus.innerText = "🚨 SOS Transmitting";
+                meshStatus.classList.remove('text-slate-300', 'bg-slate-800');
+                meshStatus.classList.add('text-red-400', 'bg-red-950', 'animate-pulse');
+            } else if (pin.length === 4) {
+                alert("PIN din ya yi daidai! An bude babban shafin tsaro.");
+                document.getElementById('user-pin').value = "";
+            } else {
+                alert("Da fatan za a saka lamba 4 ta sirri.");
+            }
+        }
+    </script>
+</body>
+</html>
